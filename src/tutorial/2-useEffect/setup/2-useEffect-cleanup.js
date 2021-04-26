@@ -4,7 +4,25 @@ import React, { useState, useEffect } from 'react';
 // second argument
 
 const UseEffectCleanup = () => {
-  return <h2>useEffect cleanup</h2>;
+  const [size, setSize] = useState(window.innerWidth);
+
+  const checkSize = () => {
+    setSize(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', checkSize)
+    return () => {
+      window.removeEventListener('resize', checkSize);
+    }
+  }, []);
+
+  return (
+    <React.Fragment>
+      <h2>Window</h2>
+      <h4>{size} PX</h4>
+    </React.Fragment>
+  );
 };
 
 export default UseEffectCleanup;
