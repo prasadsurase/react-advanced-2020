@@ -13,7 +13,7 @@ const ControlledInputs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(firstName && email) {
-      const person = {firstName, email};
+      const person = {id: new Date().getTime().toString(), firstName, email};
       setPeople((people) => {
         return [...people, person];
       });
@@ -24,21 +24,6 @@ const ControlledInputs = () => {
 
   return (
     <React.Fragment>
-      <article>
-        <h3> List of people</h3>
-        <ul>
-          {people.map((person) => {
-            return (
-              <li key={person.email}>
-                <span>Name: {person.firstName}</span>
-                <br/>
-                <span>Email: {person.email}</span>
-              </li>
-            );
-          })}
-        </ul>
-      </article>
-      <br/>
       <article>
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-control">
@@ -51,6 +36,20 @@ const ControlledInputs = () => {
           </div>
           <button type="submit" className="btn">Add Person</button>
         </form>
+      </article>
+      <article>
+        <h3> List of people</h3>
+        <ul>
+          {people.map((person) => {
+            const {id, firstName, email} = person;
+            return (
+              <div className="item" key={id}>
+                <h4>{firstName}</h4>
+                <p>{email}</p>
+              </div>
+            );
+          })}
+        </ul>
       </article>
     </React.Fragment>
   );
